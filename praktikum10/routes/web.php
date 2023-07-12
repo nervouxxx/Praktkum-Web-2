@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
+
+
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -28,6 +30,12 @@ Route::get('/', [TampilanController::class, 'index']);
 
 Route::group(['middleware' => ['auth']], function () {
 
+    Route::get('/after_register', function () {
+        return view('after_register');
+    });
+
+    Route::group(['middleware' => ['auth', 'peran:admin-manager']], function () { });   
+
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
     Route::get('/produk', [ProdukController::class, 'index']);
@@ -45,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/produk/delete/{id}', [ProdukController::class, 'destroy']);
 
 });
+
 
 
 //bikin routing
